@@ -57,7 +57,7 @@ class TechnologyController extends Controller
         $technology->save();
         
         $message = 'Creazione tecnologia completata';
-        return redirect()->route('technologys.index', ['message' => $message]);
+        return redirect()->route('admin.technologys.index', ['message' => $message]);
     }
 
     /**
@@ -109,6 +109,6 @@ class TechnologyController extends Controller
     {
         $technology->delete();
         $message = 'Cancellazione tecnologia completata';
-        return redirect()->route('technologys.index', ['message' => $message]);
+        return redirect()->route('admin.technologys.index', ['message' => $message]);
     }
 }
