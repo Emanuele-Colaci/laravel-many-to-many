@@ -22,8 +22,22 @@
                     @if(empty($project->type->name))
                         <h3>Tipologia non disponibile</h3>
                     @else
-                        <label class="fw-bold">Tipologia:</label>
-                        <h3>{{ $project->type->name }}</h3>
+                        <h3 class="mb-3">Tipologia:</h3>
+                        <p class="mx-3">{{ $project->type->name }}</p>
+                    @endif
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="my-5">
+                    @if($project->technologies->count() > 0)
+                        <h3 class="control-label mb-3">Tecnologie associate:</h3>
+                        <ul>
+                            @foreach($project->technologies as $technology)
+                                <li>{{ $technology->name }}</li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <p>Nessuna tecnologia associata a questo progetto.</p>
                     @endif
                 </div>
             </div>
