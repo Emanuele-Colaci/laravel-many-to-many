@@ -33,7 +33,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('project', ProjectController::class);
     Route::resource('types', TypeController::class);
-    Route::resource('Technologys', TechnologyController::class);
+    Route::resource('technologys', TechnologyController::class);
 });
 
 Route::middleware('auth')->group(function () {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Technology;
 use App\Http\Requests\StoreTechnologyRequest;
 use App\Http\Requests\UpdateTechnologyRequest;
+use Illuminate\Http\Request;
 
 class TechnologyController extends Controller
 {
@@ -14,9 +15,19 @@ class TechnologyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $datas = $request->all();
+
+        if(isset($datas['message'])){
+            $message = $datas['message'];
+        }else{
+            $message = '';
+        }
+
+        $technologys = Technology::all();
+
+        return view('technologys.index', compact('technologys', 'message'));
     }
 
     /**
@@ -26,7 +37,7 @@ class TechnologyController extends Controller
      */
     public function create()
     {
-        //
+        return view('technologys.create');
     }
 
     /**
@@ -37,7 +48,16 @@ class TechnologyController extends Controller
      */
     public function store(StoreTechnologyRequest $request)
     {
-        //
+        $form_data = $request->all();
+
+        $technology = new Technology();
+        
+        $technology->fill($form_data);
+        
+        $technology->save();
+        
+        $message = 'Creazione tecnologia completata';
+        return redirect()->route('technologys.index', ['message' => $message]);
     }
 
     /**
@@ -48,7 +68,7 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        //
+        return view('technologys.show', compact('project'));
     }
 
     /**
@@ -59,7 +79,7 @@ class TechnologyController extends Controller
      */
     public function edit(Technology $technology)
     {
-        //
+        return view('technologys.edit', compact('technology'));
     }
 
     /**
@@ -71,7 +91,12 @@ class TechnologyController extends Controller
      */
     public function update(UpdateTechnologyRequest $request, Technology $technology)
     {
-        //
+        $form_data = $request->all();
+
+        $technology->update($form_data);
+
+        $message = 'Aggiornamento tecnologia completato';
+        return redirect()->route('technologys.index', ['message' => $message]);
     }
 
     /**
@@ -82,6 +107,8 @@ class TechnologyController extends Controller
      */
     public function destroy(Technology $technology)
     {
-        //
+        $technology->delete();
+        $message = 'Cancellazione tecnologia completata';
+        return redirect()->route('technologys.index', ['message' => $message]);
     }
 }
