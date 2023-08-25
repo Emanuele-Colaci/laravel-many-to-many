@@ -74,12 +74,12 @@
                                 <label class="control-label my-2">Tecnologie:</label>
                                 @foreach($technologies as $technology)
                                     <div class="form-check">
-                                        <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" class="form-check-input"
+                                        <input type="checkbox" name="technologies[]" value="{{ $technology->id }}" class="form-check-input @error('technologies') is-invalid @enderror"
                                         @if(in_array($technology->id, $project->technologies->pluck('id')->toArray())) checked @endif>
                                         <label class="form-check-label">{{ $technology->name }}</label>
                                     </div>
                                 @endforeach
-                                @error('type_id')
+                                @error('technologies')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

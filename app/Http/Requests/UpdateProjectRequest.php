@@ -27,7 +27,8 @@ class UpdateProjectRequest extends FormRequest
             'titolo' => 'required|max:50',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'descrizione' => 'required',
-            'data' => 'required'
+            'data' => 'required',
+            'technologies' => 'required|array|exists:technologies,id'  //Verifica che le tecnologie siano un array , Ogni tecnologia deve esistere nella tabella delle tecnologie
         ];
     }
     public function messages(){
@@ -35,7 +36,7 @@ class UpdateProjectRequest extends FormRequest
             'required'  => 'Il campo :attribute è obbligatorio.',
             'max'       => 'Il campo :attribute non può superare :max caratteri.',
             'image.mimes' => 'Il formato dell\'immagine non è valido. Si prega di caricare un\'immagine in formato JPEG, PNG, JPG, GIF o SVG.',
-            'image' => 'Il tipo di file non è consentito. Si prega di caricare un\'immagine in formato JPEG, PNG, JPG, GIF o SVG.',
+            'image' => 'Il tipo di file non è consentito. Si prega di caricare un\'immagine in formato JPEG, PNG, JPG, GIF o SVG.'
         ];
     }
 }

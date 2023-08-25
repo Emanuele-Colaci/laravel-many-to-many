@@ -27,7 +27,8 @@ class StoreProjectRequest extends FormRequest
             'titolo' => 'required|max:50',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg',
             'descrizione' => 'required',
-            'data' => 'required'
+            'data' => 'required',
+            'technologies' => 'required|array|exists:technologies,id'  //Verifica che le tecnologie siano un array , Ogni tecnologia deve esistere nella tabella delle tecnologie
         ];
     }
     public function messages(){
