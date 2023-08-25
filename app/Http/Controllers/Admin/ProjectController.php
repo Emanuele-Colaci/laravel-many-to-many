@@ -6,6 +6,7 @@ use Illuminate\Support\facades\Storage;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use App\Models\Type;
+use App\Models\Technology;
 use App\Http\Requests\StoreProjectRequest;
 use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Http\Request;
@@ -40,8 +41,11 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
+
         
-        return view('admin.post.create', compact('types'));
+        
+        return view('admin.post.create', compact('types', 'technologies'));
     }
 
     /**
@@ -64,11 +68,15 @@ class ProjectController extends Controller
             $path = Storage::put('projects-image', $request->image);
             $form_data['image'] = $path;
         }
-        
         $project->fill($form_data);
         
         $project->save();
 
+        if($request->has('technologies')){
+            $technologies = $request->input('technologies');
+            $project->technologies()->attach($technologies);
+        }
+        
         $message = 'Creazione progetto completata';
         return redirect()->route('admin.project.index', ['message' => $message]);
     }
@@ -93,8 +101,9 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
         $types = Type::all();
+        $technologies = Technology::all();
         
-        return view('admin.post.edit', compact('project', 'types'));
+        return view('admin.post.edit', compact('project', 'types', 'technologies'));
     }
 
     /**
@@ -115,6 +124,13 @@ class ProjectController extends Controller
 
             $path = Storage::put('projects-image', $request->image);
             $form_data['image'] = $path;
+        }
+
+        if($request->has('technologies')) {
+            $technologies = $request->input('technologies');
+            $project->technologies()->sync($technologies);
+        }else{
+            $project->technologies()->detach(); // Rimuovi tutte le associazioni se non ci sono tecnologie selezionate
         }
 
         $project->update($form_data);

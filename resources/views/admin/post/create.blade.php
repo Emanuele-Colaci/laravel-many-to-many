@@ -66,6 +66,18 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                            <div class="form-group my-4">
+                                <label class="control-label my-2">Tecnologie:</label>
+                                @foreach($technologies as $technology)
+                                    <div class="form-check">
+                                        <input type="checkbox" name="technologies[]" id="technology_{{ $technology->id }}" value="{{ $technology->id }}" class="form-check-input">
+                                        <label class="form-check-label">{{ $technology->name }}</label>
+                                    </div>
+                                @endforeach
+                                @error('type_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                             <div class="col-12 text-center my-5">
                                 <!-- Submit Button -->
                                 <button type="submit" class="btn btn-success">Aggiungi</button>
