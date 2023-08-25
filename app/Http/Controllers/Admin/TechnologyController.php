@@ -68,7 +68,7 @@ class TechnologyController extends Controller
      */
     public function show(Technology $technology)
     {
-        return view('technologys.show', compact('project'));
+        return view('technologys.show', compact('technology'));
     }
 
     /**
@@ -96,7 +96,7 @@ class TechnologyController extends Controller
         $technology->update($form_data);
 
         $message = 'Aggiornamento tecnologia completato';
-        return redirect()->route('technologys.index', ['message' => $message]);
+        return redirect()->route('admin.technologys.index', ['message' => $message]);
     }
 
     /**
